@@ -1,0 +1,521 @@
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+
+    font-family:Arial,sans-serif;
+
+    background:
+    linear-gradient(
+        180deg,
+        #08111f,
+        #0d1728,
+        #111c31
+    );
+
+    color:#fff;
+
+    min-height:100vh;
+
+}
+
+.app{
+
+    max-width:700px;
+
+    margin:auto;
+
+    padding:18px;
+
+}
+
+.titulo-img{
+
+    width:100%;
+
+    display:block;
+
+    border-radius:18px;
+
+    margin-bottom:20px;
+
+    box-shadow:
+    0 6px 20px rgba(0,0,0,.4);
+
+}
+
+.tela{
+
+    display:none;
+
+}
+
+.tela.ativa{
+
+    display:block;
+
+    animation:fade .35s ease;
+
+}
+
+@keyframes fade{
+
+from{
+
+opacity:0;
+
+transform:translateY(10px);
+
+}
+
+to{
+
+opacity:1;
+
+transform:translateY(0);
+
+}
+
+}
+
+.card{
+
+    background:
+    linear-gradient(
+        145deg,
+        #18263e,
+        #101b2f
+    );
+
+    border-radius:18px;
+
+    padding:18px;
+
+    margin-bottom:15px;
+
+    border:1px solid rgba(255,255,255,.05);
+
+    box-shadow:
+    0 5px 18px rgba(0,0,0,.35);
+
+}
+
+.card h3{
+
+    color:#00ff88;
+
+    margin-bottom:10px;
+
+}
+
+.card p{
+
+    margin:6px 0;
+
+}
+
+.temporada-card{
+
+    background:
+    linear-gradient(
+        145deg,
+        #131d31,
+        #101827
+    );
+
+    border-left:
+    4px solid #00ff88;
+
+    border-radius:14px;
+
+    padding:14px;
+
+    margin-top:12px;
+
+}
+
+.temporada-card h4{
+
+    color:#00ff88;
+
+    margin-bottom:8px;
+
+}
+
+.temporada-card p{
+
+    margin:5px 0;
+
+}
+
+.temporada-card ul{
+
+    padding-left:20px;
+
+    margin-top:8px;
+
+}
+
+.temporada-card li{
+
+    margin-bottom:4px;
+
+}
+
+input,
+select{
+
+    width:100%;
+
+    padding:14px;
+
+    margin-top:10px;
+
+    border:none;
+
+    outline:none;
+
+    border-radius:12px;
+
+    background:#101826;
+
+    color:#fff;
+
+    font-size:15px;
+
+    border:
+    1px solid rgba(255,255,255,.05);
+
+}
+
+input:focus,
+select:focus{
+
+    border:
+    1px solid #00ff88;
+
+    box-shadow:
+    0 0 10px rgba(0,255,136,.3);
+
+}
+
+button{
+
+    width:100%;
+
+    margin-top:12px;
+
+    padding:14px;
+
+    border:none;
+
+    border-radius:12px;
+
+    cursor:pointer;
+
+    font-size:15px;
+
+    font-weight:700;
+
+    color:#061119;
+
+    background:
+    linear-gradient(
+        90deg,
+        #00ff88,
+        #00d977
+    );
+
+}
+
+button:hover{
+
+    transform:scale(1.02);
+
+}
+
+button:active{
+
+    transform:scale(.98);
+
+}
+
+button.danger{
+
+    color:white;
+
+    background:
+    linear-gradient(
+        90deg,
+        #ff4444,
+        #d91f1f
+    );
+
+}
+
+.botao-voltar{
+
+    margin-top:20px;
+
+}
+
+hr{
+
+    border:0;
+
+    height:1px;
+
+    background:#27344f;
+
+    margin:25px 0;
+
+}
+
+.menu-temporada{
+
+    margin-top:15px;
+
+    background:#18263e;
+
+    border-radius:15px;
+
+    overflow:hidden;
+
+}
+
+.menu-temporada-topo{
+
+    padding:18px;
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    cursor:pointer;
+
+    font-weight:bold;
+
+    color:#00ff88;
+
+}
+
+.menu-temporada-conteudo{
+
+    display:none;
+
+    padding:15px;
+
+}
+
+.menu-temporada-conteudo.aberto{
+
+    display:block;
+
+}
+
+#iconeTemp{
+
+    font-size:18px;
+
+}
+
+#infoHistorico .card{
+
+    margin-bottom:20px;
+
+}
+
+#infoHistorico h3{
+
+    color:#00ff88;
+
+}
+
+#infoHall .card{
+
+    margin-bottom:20px;
+
+}
+
+::-webkit-scrollbar{
+
+    width:8px;
+
+}
+
+::-webkit-scrollbar-thumb{
+
+    background:#00ff88;
+
+    border-radius:10px;
+
+}
+
+::-webkit-scrollbar-track{
+
+    background:#0d1728;
+
+}
+
+.escudo{
+
+width:90px;
+
+height:90px;
+
+object-fit:contain;
+
+display:block;
+
+margin:15px auto;
+
+}
+
+#infoHistorico h2{
+
+color:#00ff88;
+
+margin-bottom:15px;
+
+}
+
+#infoHistorico h3{
+
+margin-bottom:10px;
+
+}
+
+#infoHistorico .temporada-card{
+
+margin-top:15px;
+
+}
+
+#infoHall .card{
+
+margin-bottom:18px;
+
+}
+
+#infoHall h3{
+
+color:#00ff88;
+
+margin-bottom:12px;
+
+}
+
+#infoHall p{
+
+margin:8px 0;
+
+font-size:15px;
+
+}
+
+#infoHall .card{
+
+    margin-bottom:18px;
+
+}
+
+#infoHall h3{
+
+    color:#00ff88;
+
+    margin-bottom:12px;
+
+    font-size:18px;
+
+}
+
+#infoHall p{
+
+    margin:8px 0;
+
+    font-size:15px;
+
+}
+
+.hall-item{
+
+    padding:10px;
+
+    margin-top:8px;
+
+    border-radius:12px;
+
+    background:#101827;
+
+}
+
+.hall-item:nth-child(2){
+
+    border-left:4px solid gold;
+
+}
+
+.hall-item:nth-child(3){
+
+    border-left:4px solid silver;
+
+}
+
+.hall-item:nth-child(4){
+
+    border-left:4px solid #cd7f32;
+
+}
+
+.menu-temporada-conteudo input{
+
+    padding:10px;
+
+    font-size:14px;
+
+    margin-top:8px;
+
+}
+
+.menu-temporada-conteudo button{
+
+    padding:10px;
+
+    font-size:14px;
+
+    margin-top:8px;
+
+}
+
+.menu-temporada-conteudo h3{
+
+    font-size:16px;
+
+    margin-bottom:10px;
+
+}
+
+.menu-temporada-conteudo{
+
+    padding:12px;
+
+}
+
+.menu-temporada{
+
+    border-radius:12px;
+
+}
+
+.menu-temporada-topo{
+
+    padding:14px 16px;
+
+    font-size:15px;
+
+}

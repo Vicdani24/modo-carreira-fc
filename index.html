@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+content="width=device-width,initial-scale=1.0">
+
+<title>Modo Carreira</title>
+
+<link rel="stylesheet" href="style.css">
+
+</head>
+
+<body>
+
+<div class="app">
+
+<img src="titulo.png" class="titulo-img">
+
+
+<!-- MENU -->
+
+<div id="menu" class="tela ativa">
+
+<div class="card" onclick="ir('nova')">
+➕ Nova Carreira
+</div>
+
+<div class="card" onclick="ir('carregar')">
+📂 Carregar Carreira
+</div>
+
+<div class="card" onclick="ir('atual')">
+🏆 Carreira Atual
+</div>
+
+<div class="card" onclick="ir('historico')">
+📜 Histórico
+</div>
+
+<div class="card" onclick="ir('hall')">
+🏅 Hall da Fama
+</div>
+
+</div>
+
+
+<!-- NOVA -->
+
+
+<div id="nova" class="tela">
+
+<h2>Nova Carreira</h2>
+
+<input id="nome" placeholder="Nome">
+
+<select id="tipo">
+
+<option>Jogador</option>
+<option>Técnico</option>
+
+</select>
+
+<input id="time" placeholder="Time inicial">
+
+<input id="orcamento"
+placeholder="Orçamento Inicial">
+
+<input id="orcamentof"
+placeholder="Orçamento Final">
+
+<input id="temporada"
+placeholder="Temporada inicial">
+
+<button onclick="criar()">
+
+Criar
+
+</button>
+
+<button onclick="ir('menu')">
+
+Voltar
+
+</button>
+
+</div>
+
+
+<!-- CARREGAR -->
+
+<div id="carregar" class="tela">
+
+<h2>Carreiras</h2>
+
+<div id="listaCarreiras"></div>
+
+<button onclick="ir('menu')">
+
+Voltar
+
+</button>
+
+</div>
+
+
+<!-- ATUAL -->
+
+<div id="atual" class="tela">
+
+<h2>🏆 Carreira Atual</h2>
+
+<div id="infoAtual"></div>
+
+<button onclick="ir('menu')">
+
+⬅ Voltar ao Menu
+
+</button>
+
+<button
+class="danger"
+onclick="apagarCarreiraAtual()">
+
+🗑 Apagar Carreira
+
+</button>
+
+<hr>
+
+<div class="menu-temporada">
+
+<div
+class="menu-temporada-topo"
+onclick="toggleTemporada()">
+
+<span>
+
+⚙️ Dados da Temporada Atual
+
+</span>
+
+<span id="iconeTemp">
+
+▼
+
+</span>
+
+</div>
+
+<div
+id="conteudoTemporada"
+class="menu-temporada-conteudo">
+
+
+<input id="novoTime"
+placeholder="Novo Time">
+
+<button onclick="alterarTime()">
+
+Alterar Time
+
+</button>
+
+
+<input id="novaSelecao"
+placeholder="Seleção">
+
+<button onclick="alterarSelecao()">
+
+Alterar Seleção
+
+</button>
+
+<input id="novoJogos"
+placeholder="Jogos">
+
+<button onclick="alterarJogos()">
+
+Atualizar Jogos
+
+</button>
+
+
+<input id="novoVitorias"
+placeholder="Vitórias">
+
+<button onclick="alterarVitorias()">
+
+Atualizar Vitórias
+
+</button>
+
+
+<input id="novoEmpates"
+placeholder="Empates">
+
+<button onclick="alterarEmpates()">
+
+Atualizar Empates
+
+</button>
+
+
+<input id="novoDerrotas"
+placeholder="Derrotas">
+
+<button onclick="alterarDerrotas()">
+
+Atualizar Derrotas
+
+</button>
+
+
+<input id="novoGols"
+placeholder="Gols Marcados">
+
+<button onclick="alterarGols()">
+
+Atualizar Gols
+
+</button>
+
+<input id="novoOrcamento"
+placeholder="Orçamento Inicial">
+
+<button onclick="alterarOrcamento()">
+
+Atualizar
+
+</button>
+
+
+<input id="novaOrcamentof"
+placeholder="Orçamento Final">
+
+<button onclick="alterarOrcamentof()">
+
+Atualizar
+
+</button>
+
+
+<input id="novaGoleada"
+placeholder="Maior Goleada">
+
+<button onclick="alterarGoleada()">
+
+Atualizar Goleada
+
+</button>
+
+
+<input id="novaTransferencia"
+placeholder="Maior Transferência">
+
+<button onclick="alterarTransferencia()">
+
+Atualizar Transferência
+
+</button>
+
+<hr>
+
+<h3>
+
+🏆 Adicionar Título
+
+</h3>
+
+<select id="tituloSelect">
+
+<option>Liga Nacional</option>
+
+<option>Copa Nacional</option>
+
+<option>Supercopa</option>
+
+<option>Libertadores</option>
+
+<option>Champions League</option>
+
+<option>Europa League</option>
+
+<option>Copa Sul-Americana</option>
+
+<option>Eurocopa</option>
+
+<option>Copa das Confederações</option>
+
+<option>Copa do Mundo</option>
+
+<option>Mundial de Clubes</option>
+
+</select>
+
+<button onclick="adicionarTitulo()">
+
+➕ Adicionar Título
+
+</button>
+
+<hr>
+
+<h3>
+
+📅 Nova Temporada
+
+</h3>
+
+<button onclick="novaTemporada()">
+
+➕ Adicionar Próxima Temporada
+
+</button>
+
+<hr>
+
+<h3>
+
+📖 Temporadas da Carreira
+
+</h3>
+
+<div id="listaTemporadas"></div>
+
+</div>
+
+</div>
+
+</div>
+
+
+<!-- HISTÓRICO -->
+
+<div id="historico" class="tela">
+
+<h2>
+
+📜 Histórico
+
+</h2>
+
+<div id="infoHistorico"></div>
+
+<button
+class="botao-voltar"
+onclick="ir('menu')">
+
+⬅ Voltar ao Menu
+
+</button>
+
+</div>
+
+
+<!-- HALL -->
+
+<div id="hall" class="tela">
+
+<h2>
+
+🏅 Hall da Fama
+
+</h2>
+
+<div id="infoHall"></div>
+
+<button onclick="ir('menu')">
+
+⬅ Voltar ao Menu
+
+</button>
+
+</div>
+
+
+</div>
+
+<script src="script.js"></script>
+
+</body>
+
+</html>

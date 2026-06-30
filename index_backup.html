@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FifaModoCarreira</title>
+
+<link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<header>
+<h1>⚽ FifaModoCarreira</h1>
+<p>Histórico completo das suas carreiras</p>
+</header>
+
+<main>
+
+<div class="card">
+
+<h2>👔 Carreira de Técnico</h2>
+
+<input type="text" id="clube" placeholder="Nome do clube">
+
+<input type="text" id="temporada" placeholder="Temporada">
+
+<input type="text" id="titulos" placeholder="Títulos conquistados">
+
+<button onclick="salvarTecnico()">
+Salvar Carreira
+</button>
+
+</div>
+
+<div class="card">
+
+<h2>⭐ Carreira de Jogador</h2>
+
+<input type="text" id="jogador" placeholder="Nome do jogador">
+
+<input type="text" id="clubeJogador" placeholder="Clube">
+
+<input type="text" id="selecao" placeholder="Seleção nacional">
+
+<button onclick="salvarJogador()">
+Salvar Jogador
+</button>
+
+</div>
+
+<div class="card">
+
+<h2>📜 Histórico</h2>
+
+<div id="historico"></div>
+
+</div>
+
+</main>
+
+<script src="script.js"></script>
+
+</body>
+</html>
