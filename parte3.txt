@@ -1,0 +1,400 @@
+
+);
+
+if(!menu) return;
+
+menu.classList.toggle(
+
+"aberto"
+
+);
+
+icone.innerHTML =
+
+menu.classList.contains(
+
+"aberto"
+
+)
+
+?
+
+"▲"
+
+:
+
+"▼";
+
+}
+
+
+/* ==========================
+   LISTA TEMPORADAS
+========================== */
+
+function renderTemporadas(){
+
+const c = getAtual();
+
+if(!c) return;
+
+const lista =
+
+document.getElementById(
+
+"listaTemporadas"
+
+);
+
+if(!lista) return;
+
+lista.innerHTML =
+
+c.temporadas.map(
+
+t => `
+
+<div class="temporada-card">
+
+<h4>
+
+Temporada ${t.ano}
+
+</h4>
+
+<p>
+
+Time:
+
+${t.time || "-"}
+
+</p>
+
+<p>
+
+Seleção:
+
+${t.selecao || "-"}
+
+</p>
+
+<p>
+
+Jogos:
+
+${t.jogos}
+
+</p>
+
+<p>
+
+Vitórias:
+
+${t.vitorias}
+
+</p>
+
+<p>
+
+Empates:
+
+${t.empates}
+
+</p>
+
+<p>
+
+Derrotas:
+
+${t.derrotas}
+
+</p>
+
+<p>
+
+Gols:
+
+${t.gols}
+
+</p>
+
+<p>
+
+Orçamento:
+
+${t.orcamento || "-"}
+
+</p>
+
+<p>
+
+Orçamento Final:
+
+${t.orcamentof || "-"}
+
+</p>
+
+<p>
+
+Maior Goleada:
+
+${t.goleada || "-"}
+
+</p>
+
+<p>
+
+Maior Transferência:
+
+${t.transferencia || "-"}
+
+</p>
+
+<p>
+
+Títulos:
+
+</p>
+
+<ul>
+
+${
+
+t.titulos.length
+
+?
+
+t.titulos.map(
+
+x=>`<li>${x}</li>`
+
+).join("")
+
+:
+
+"<li>Nenhum título</li>"
+
+}
+
+</ul>
+
+</div>
+
+`
+
+).join("");
+
+}
+
+
+/* ==========================
+   CARREGAR CARREIRAS
+========================== */
+
+function renderCarreiras(){
+
+const lista =
+
+document.getElementById(
+
+"listaCarreiras"
+
+);
+
+if(!lista) return;
+
+if(
+
+carreiras.length===0
+
+){
+
+lista.innerHTML = `
+
+<div class="card">
+
+<h3>
+
+Nenhuma carreira
+
+</h3>
+
+</div>
+
+`;
+
+return;
+
+}
+
+lista.innerHTML =
+
+carreiras.map(
+
+(c,i)=>`
+
+<div class="card">
+
+<b>
+
+Carreira
+
+${i+1}
+
+-
+
+${c.nome}
+
+</b>
+
+<br><br>
+
+<button
+
+onclick="selecionar(${c.id})"
+
+>
+
+Carregar
+
+</button>
+
+<button
+
+class="danger"
+
+onclick="apagar(${c.id})"
+
+>
+
+Apagar
+
+</button>
+
+</div>
+
+`
+
+).join("");
+
+}
+
+
+/* ==========================
+   SELECIONAR
+========================== */
+
+function selecionar(id){
+
+atual = id;
+
+salvar();
+
+ir(
+
+"atual"
+
+);
+
+}
+
+
+/* ==========================
+   APAGAR
+========================== */
+
+function apagar(id){
+
+if(
+
+!confirm(
+
+"Apagar carreira?"
+
+)
+
+)
+
+return;
+
+carreiras =
+
+carreiras.filter(
+
+c => c.id !== id
+
+);
+
+if(
+
+atual === id
+
+){
+
+atual = null;
+
+}
+
+salvar();
+
+renderCarreiras();
+
+}
+
+
+/* ==========================
+   APAGAR ATUAL
+========================== */
+
+function apagarCarreiraAtual(){
+
+if(
+
+!confirm(
+
+"Apagar carreira atual?"
+
+)
+
+)
+
+return;
+
+carreiras =
+
+carreiras.filter(
+
+c => c.id !== atual
+
+);
+
+atual = null;
+
+salvar();
+
+ir(
+
+"menu"
+
+);
+
+}
+
+
+/* ==========================
+   HISTÓRICO
+========================== */
+
+function renderHistorico(){
+
+const div =
+
+document.getElementById(
+
+"infoHistorico"
+
+);
+
+if(!div) return;
+
+if(

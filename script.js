@@ -452,26 +452,27 @@ renderTemporadas();
    ALTERAÇÕES
 ========================== */
 
-function alterarTime(){
+async function alterarTime(){
 
 const t = temporadaAtual();
 
-if(!t) return;
+const nome = novoTime.value;
 
-const valor =
+t.time = nome;
 
-novoTime.value.trim();
+/* busca o escudo na TheSportsDB */
 
-if(!valor) return;
-
-t.time = valor;
+t.escudo = await pegarEscudo(nome);
 
 salvar();
 
 renderAtual();
 
-}
+renderHistorico();
 
+renderHall();
+
+}
 
 function alterarSelecao(){
 
@@ -1184,25 +1185,24 @@ ir(
    HISTÓRICO
 ========================== */
 
-function renderHistorico(){
 
-const div =
 
-document.getElementById(
+/* ==========================
+   HISTÓRICO
+========================== */
 
+async function renderHistorico(){
+
+const div = document.getElementById(
 "infoHistorico"
-
 );
 
 if(!div) return;
 
-if(
 
-carreiras.length===0
+if(carreiras.length===0){
 
-){
-
-div.innerHTML = `
+div.innerHTML=`
 
 <div class="card">
 
@@ -1220,33 +1220,39 @@ return;
 
 }
 
-let html = "";
 
-carreiras.forEach(
+let html="";
 
-c=>{
 
-let totalTitulos = 0;
+for(const c of carreiras){
 
-let totais = {};
+let totalTitulos=0;
 
-let equipes = {};
+let totais={};
 
-c.temporadas.forEach(
+let equipes={};
 
-t=>{
 
-const clube =
+for(const t of c.temporadas){
+
+const clube=
 
 t.time ||
 
 "Sem clube";
 
-if(
 
-!equipes[clube]
+if(!equipes[clube]){
 
-){
+
+let escudo =
+
+await pegarEscudo(
+
+clube
+
+);
+
 
 equipes[clube]={
 
@@ -1254,19 +1260,25 @@ inicio:t.ano,
 
 fim:t.ano,
 
-titulos:{}
+titulos:{},
+
+escudo:
+
+escudo ||
+
+"escudo_padrao.png"
 
 };
 
 }
 
+
 equipes[clube].fim =
 
 t.ano;
 
-t.titulos.forEach(
 
-titulo=>{
+for(const titulo of t.titulos){
 
 equipes[clube]
 
@@ -1282,6 +1294,7 @@ equipes[clube]
 
 )+1;
 
+
 totais[titulo] =
 
 (
@@ -1292,15 +1305,14 @@ totais[titulo]
 
 )+1;
 
+
 totalTitulos++;
 
 }
 
-);
 
 }
 
-);
 
 html += `
 
@@ -1314,61 +1326,55 @@ ${c.nome}
 
 `;
 
-Object.keys(
+for(const nome in equipes){
 
-equipes
-
-)
-
-.forEach(
-
-nome=>{
-
-const equipe =
-
-equipes[nome];
+const equipe = equipes[nome];
 
 html += `
 
 <div class="temporada-card">
 
+<img
+
+class="escudo-historico"
+
+src="${equipe.escudo}"
+
+alt="${nome}"
+
+onerror="this.src='escudo_padrao.png'"
+
+>
+
+<div>
+
 <h3>
 
 ${nome}
 
-(
-
-${equipe.inicio}
-
--
-
-${equipe.fim}
-
-)
-
 </h3>
+
+<p>
+
+📅 ${equipe.inicio} - ${equipe.fim}
+
+</p>
 
 `;
 
-const lista =
-
-Object.entries(
+const lista = Object.entries(
 
 equipe.titulos
 
 );
 
-if(
-
-lista.length===0
-
-){
+if(lista.length===0){
 
 html += `
 
 <p>
 
-Nenhum título
+Nenhum título conquistado
 
 </p>
 
@@ -1384,9 +1390,7 @@ html += `
 
 <p>
 
-🏆
-
-${titulo}
+🏆 ${titulo}
 
 :
 
@@ -1396,11 +1400,11 @@ ${qtd}
 
 `;
 
-}
-
-);
+});
 
 html += `
+
+</div>
 
 </div>
 
@@ -1408,7 +1412,6 @@ html += `
 
 }
 
-);
 
 html += `
 
@@ -1418,9 +1421,7 @@ html += `
 
 <h3>
 
-🏅 Total
-
-da Carreira
+🏅 Total da Carreira
 
 </h3>
 
@@ -1452,9 +1453,7 @@ ${qtd}
 
 `;
 
-}
-
-);
+});
 
 html += `
 
@@ -1464,7 +1463,7 @@ html += `
 
 <b>
 
-🎖️ Total:
+🎖️ Títulos Totais:
 
 </b>
 
@@ -1492,11 +1491,7 @@ ${c.temporadas.length}
 
 }
 
-);
-
-div.innerHTML =
-
-html;
+div.innerHTML = html;
 
 }
 
@@ -1506,23 +1501,15 @@ html;
 
 function renderHall(){
 
-const div =
-
-document.getElementById(
-
+const div = document.getElementById(
 "infoHall"
-
 );
 
 if(!div) return;
 
-if(
+if(carreiras.length===0){
 
-carreiras.length===0
-
-){
-
-div.innerHTML = `
+div.innerHTML=`
 
 <div class="card">
 
@@ -1540,87 +1527,104 @@ return;
 
 }
 
-const titulos = [];
+const titulos=[];
 
-const goleadas = [];
+const goleadas=[];
 
-const transferencias = [];
+const transferencias=[];
 
-const temporadas = [];
+const temporadas=[];
 
-const gols = [];
+const gols=[];
 
-const vitorias = [];
+const vitorias=[];
 
-carreiras.forEach(
+const orcamentos=[];
 
-c=>{
+const orcamentosF=[];
 
-let totalTitulos = 0;
 
-let maiorGoleada = 0;
+carreiras.forEach(c=>{
 
-let maiorTransferencia = 0;
+let totalTitulos=0;
 
-let totalGols = 0;
+let maiorGoleada=0;
 
-let totalVitorias = 0;
+let maiorTransferencia=0;
 
-c.temporadas.forEach(
+let totalGols=0;
 
-t=>{
+let totalVitorias=0;
 
-totalTitulos +=
+let maiorOrcamento=0;
 
-t.titulos.length;
+let maiorOrcamentoF=0;
 
-maiorGoleada =
 
-Math.max(
+c.temporadas.forEach(t=>{
+
+totalTitulos += t.titulos.length;
+
+
+maiorGoleada = Math.max(
 
 maiorGoleada,
 
-Number(
-
-t.goleada
-
-) || 0
+Number(t.goleada)||0
 
 );
 
-maiorTransferencia =
 
-Math.max(
+maiorTransferencia = Math.max(
 
 maiorTransferencia,
 
-Number(
-
-t.transferencia
-
-) || 0
+Number(t.transferencia)||0
 
 );
+
 
 totalGols +=
 
-Number(
+Number(t.gols)||0;
 
-t.gols
-
-) || 0;
 
 totalVitorias +=
 
+Number(t.vitorias)||0;
+
+
+maiorOrcamento = Math.max(
+
+maiorOrcamento,
+
 Number(
 
-t.vitorias
+String(t.orcamento)
 
-) || 0;
+.replace(/[^\d]/g,'')
 
-}
+)||0
 
 );
+
+
+maiorOrcamentoF = Math.max(
+
+maiorOrcamentoF,
+
+Number(
+
+String(t.orcamentof)
+
+.replace(/[^\d]/g,'')
+
+)||0
+
+);
+
+});
+
 
 titulos.push({
 
@@ -1630,6 +1634,7 @@ valor:totalTitulos
 
 });
 
+
 goleadas.push({
 
 nome:c.nome,
@@ -1637,6 +1642,7 @@ nome:c.nome,
 valor:maiorGoleada
 
 });
+
 
 transferencias.push({
 
@@ -1646,6 +1652,7 @@ valor:maiorTransferencia
 
 });
 
+
 temporadas.push({
 
 nome:c.nome,
@@ -1653,6 +1660,7 @@ nome:c.nome,
 valor:c.temporadas.length
 
 });
+
 
 gols.push({
 
@@ -1662,6 +1670,7 @@ valor:totalGols
 
 });
 
+
 vitorias.push({
 
 nome:c.nome,
@@ -1670,57 +1679,42 @@ valor:totalVitorias
 
 });
 
-}
 
-);
+orcamentos.push({
 
-titulos.sort(
+nome:c.nome,
 
-(a,b)=>
+valor:maiorOrcamento
 
-b.valor-a.valor
+});
 
-);
 
-goleadas.sort(
+orcamentosF.push({
 
-(a,b)=>
+nome:c.nome,
 
-b.valor-a.valor
+valor:maiorOrcamentoF
 
-);
+});
 
-transferencias.sort(
+});
 
-(a,b)=>
 
-b.valor-a.valor
+titulos.sort((a,b)=>b.valor-a.valor);
 
-);
+goleadas.sort((a,b)=>b.valor-a.valor);
 
-temporadas.sort(
+transferencias.sort((a,b)=>b.valor-a.valor);
 
-(a,b)=>
+temporadas.sort((a,b)=>b.valor-a.valor);
 
-b.valor-a.valor
+gols.sort((a,b)=>b.valor-a.valor);
 
-);
+vitorias.sort((a,b)=>b.valor-a.valor);
 
-gols.sort(
+orcamentos.sort((a,b)=>b.valor-a.valor);
 
-(a,b)=>
-
-b.valor-a.valor
-
-);
-
-vitorias.sort(
-
-(a,b)=>
-
-b.valor-a.valor
-
-);
+orcamentosF.sort((a,b)=>b.valor-a.valor);
 
 div.innerHTML =
 
@@ -1738,7 +1732,9 @@ hallCard(
 
 "⚽ Maiores Goleadas",
 
-goleadas
+goleadas,
+
+"placar"
 
 )
 
@@ -1748,7 +1744,9 @@ hallCard(
 
 "💰 Transferências",
 
-transferencias
+transferencias,
+
+"dinheiro"
 
 )
 
@@ -1780,7 +1778,71 @@ hallCard(
 
 vitorias
 
+)
+
++
+
+hallCard(
+
+"💵 Maior Orçamento Inicial",
+
+orcamentos,
+
+"dinheiro"
+
+)
+
++
+
+hallCard(
+
+"🏦 Maior Orçamento Final",
+
+orcamentosF,
+
+"dinheiro"
+
 );
+
+}
+
+
+
+/* ==========================
+   FORMATAR VALORES
+========================== */
+
+function formatarValor(
+
+valor,
+
+tipo
+
+){
+
+if(tipo==="dinheiro"){
+
+return "€ " +
+
+Number(valor)
+
+.toLocaleString(
+
+"pt-BR"
+
+);
+
+}
+
+if(tipo==="placar"){
+
+return valor +
+
+" x 0";
+
+}
+
+return valor;
 
 }
 
@@ -1793,7 +1855,9 @@ function hallCard(
 
 titulo,
 
-lista
+lista,
+
+tipo="normal"
 
 ){
 
@@ -1807,6 +1871,7 @@ ${titulo}
 
 </h3>
 
+
 <div class="hall-item">
 
 🥇
@@ -1819,7 +1884,17 @@ lista[0]
 
 `${lista[0].nome}
 
-(${lista[0].valor})`
+(
+
+${formatarValor(
+
+lista[0].valor,
+
+tipo
+
+)}
+
+)`
 
 :
 
@@ -1828,6 +1903,7 @@ lista[0]
 }
 
 </div>
+
 
 <div class="hall-item">
 
@@ -1841,7 +1917,17 @@ lista[1]
 
 `${lista[1].nome}
 
-(${lista[1].valor})`
+(
+
+${formatarValor(
+
+lista[1].valor,
+
+tipo
+
+)}
+
+)`
 
 :
 
@@ -1850,6 +1936,7 @@ lista[1]
 }
 
 </div>
+
 
 <div class="hall-item">
 
@@ -1863,7 +1950,17 @@ lista[2]
 
 `${lista[2].nome}
 
-(${lista[2].valor})`
+(
+
+${formatarValor(
+
+lista[2].valor,
+
+tipo
+
+)}
+
+)`
 
 :
 
@@ -1872,6 +1969,7 @@ lista[2]
 }
 
 </div>
+
 
 </div>
 
