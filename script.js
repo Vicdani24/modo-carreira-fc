@@ -869,7 +869,6 @@ Time:
 ${t.time || "-"}
 
 </p>
-
 <p>
 
 Seleção:
@@ -877,7 +876,6 @@ Seleção:
 ${t.selecao || "-"}
 
 </p>
-
 <p>
 
 Jogos:
@@ -885,7 +883,6 @@ Jogos:
 ${t.jogos}
 
 </p>
-
 <p>
 
 Vitórias:
@@ -893,7 +890,6 @@ Vitórias:
 ${t.vitorias}
 
 </p>
-
 <p>
 
 Empates:
@@ -901,7 +897,6 @@ Empates:
 ${t.empates}
 
 </p>
-
 <p>
 
 Derrotas:
@@ -909,7 +904,6 @@ Derrotas:
 ${t.derrotas}
 
 </p>
-
 <p>
 
 Gols:
@@ -917,7 +911,6 @@ Gols:
 ${t.gols}
 
 </p>
-
 <p>
 
 Orçamento:
@@ -925,7 +918,6 @@ Orçamento:
 ${t.orcamento || "-"}
 
 </p>
-
 <p>
 
 Orçamento Final:
@@ -933,7 +925,6 @@ Orçamento Final:
 ${t.orcamentof || "-"}
 
 </p>
-
 <p>
 
 Maior Goleada:
@@ -941,7 +932,6 @@ Maior Goleada:
 ${t.goleada || "-"}
 
 </p>
-
 <p>
 
 Maior Transferência:
@@ -949,13 +939,11 @@ Maior Transferência:
 ${t.transferencia || "-"}
 
 </p>
-
 <p>
 
 Títulos:
 
 </p>
-
 <ul>
 
 ${
@@ -1179,12 +1167,6 @@ ir(
 );
 
 }
-
-
-/* ==========================
-   HISTÓRICO
-========================== */
-
 
 
 /* ==========================

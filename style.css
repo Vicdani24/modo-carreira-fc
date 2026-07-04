@@ -135,35 +135,47 @@ transform:translateY(0);
 
 .temporada-card{
 
-    background:
-    linear-gradient(
-        145deg,
-        #131d31,
-        #101827
-    );
+display:flex;
 
-    border-left:
-    4px solid #00ff88;
+flex-direction:column;
 
-    border-radius:14px;
+width:100%;
 
-    padding:14px;
+padding:16px;
 
-    margin-top:12px;
-
-}
-
-.temporada-card h4{
-
-    color:#00ff88;
-
-    margin-bottom:8px;
+gap:8px;
 
 }
 
 .temporada-card p{
 
-    margin:5px 0;
+display:block;
+
+width:100%;
+
+white-space:normal;
+
+word-break:normal;
+
+overflow-wrap:break-word;
+
+}
+
+.temporada-card h3{
+
+width:100%;
+
+}
+
+.temporada-card div{
+
+width:100%;
+
+display:flex;
+
+flex-direction:column;
+
+gap:6px;
 
 }
 
