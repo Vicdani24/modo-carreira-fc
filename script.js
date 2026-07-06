@@ -1,11 +1,15 @@
 let carreiras =
 JSON.parse(
-localStorage.getItem("carreiras")
+localStorage.getItem(
+"carreiras"
+)
 ) || [];
 
 let atual =
 JSON.parse(
-localStorage.getItem("atual")
+localStorage.getItem(
+"atual"
+)
 ) || null;
 
 
@@ -15,38 +19,45 @@ localStorage.getItem("atual")
 
 async function pegarEscudo(nomeTime){
 
-    if(!nomeTime)
-        return "escudo_padrao.png";
+if(!nomeTime)
+return "escudo_padrao.png";
 
-    try{
+try{
 
-        const resposta = await fetch(
+const resposta = await fetch(
 
 `https://www.thesportsdb.com/api/v1/json/3/searchteams.php?t=${encodeURIComponent(nomeTime)}`
 
-        );
+);
 
-        const dados =
-        await resposta.json();
+const dados =
+await resposta.json();
 
-        if(
-            dados.teams &&
-            dados.teams.length
-        ){
+if(
 
-            return dados
-                .teams[0]
-                .strBadge;
+dados.teams &&
 
-        }
+dados.teams.length
 
-    }catch(e){
+){
 
-        console.log(e);
+return dados
 
-    }
+.teams[0]
 
-    return "escudo_padrao.png";
+.strBadge;
+
+}
+
+}
+
+catch(e){
+
+console.log(e);
+
+}
+
+return "escudo_padrao.png";
 
 }
 
@@ -57,25 +68,29 @@ async function pegarEscudo(nomeTime){
 
 function salvar(){
 
-    localStorage.setItem(
+localStorage.setItem(
 
-        "carreiras",
+"carreiras",
 
-        JSON.stringify(
-            carreiras
-        )
+JSON.stringify(
 
-    );
+carreiras
 
-    localStorage.setItem(
+)
 
-        "atual",
+);
 
-        JSON.stringify(
-            atual
-        )
+localStorage.setItem(
 
-    );
+"atual",
+
+JSON.stringify(
+
+atual
+
+)
+
+);
 
 }
 
@@ -87,12 +102,19 @@ function salvar(){
 function ir(tela){
 
 document
-.querySelectorAll(".tela")
+
+.querySelectorAll(
+
+".tela"
+
+)
 
 .forEach(
 
 t=>t.classList.remove(
+
 "ativa"
+
 )
 
 );
@@ -100,35 +122,54 @@ t=>t.classList.remove(
 const elemento =
 
 document.getElementById(
+
 tela
+
 );
 
 if(!elemento) return;
 
 elemento.classList.add(
+
 "ativa"
+
 );
 
+if(
 
-if(tela==="carregar"){
+tela==="carregar"
+
+){
 
 renderCarreiras();
 
 }
 
-if(tela==="atual"){
+if(
+
+tela==="atual"
+
+){
 
 renderAtual();
 
 }
 
-if(tela==="historico"){
+if(
+
+tela==="historico"
+
+){
 
 renderHistorico();
 
 }
 
-if(tela==="hall"){
+if(
+
+tela==="hall"
+
+){
 
 renderHall();
 
@@ -181,6 +222,8 @@ time:
 
 time.value || "",
 
+escudo:"",
+
 selecao:"",
 
 orcamento:
@@ -188,6 +231,8 @@ orcamento:
 orcamento.value || "",
 
 orcamentof:"",
+
+salario:"",
 
 jogos:0,
 
@@ -199,7 +244,15 @@ derrotas:0,
 
 gols:0,
 
-goleada:"",
+goleada:{
+
+marcados:0,
+
+sofridos:0,
+
+adversario:""
+
+},
 
 transferencia:"",
 
@@ -208,7 +261,6 @@ titulos:[]
 }]
 
 };
-
 
 carreiras.push(
 
@@ -226,7 +278,11 @@ alert(
 
 );
 
-ir("menu");
+ir(
+
+"menu"
+
+);
 
 }
 
@@ -245,7 +301,6 @@ c => c.id === atual
 
 }
 
-
 function temporadaAtual(){
 
 const c = getAtual();
@@ -254,11 +309,12 @@ if(!c) return null;
 
 return c.temporadas[
 
-c.temporadas.length - 1
+c.temporadas.length-1
 
 ];
 
 }
+
 
 /* ==========================
    TELA ATUAL
@@ -300,21 +356,34 @@ document.getElementById(
 
 <div class="card">
 
-<img src="${escudo}"
+<img
+src="${escudo}"
+class="escudo"
+>
 
-class="escudo">
+<h3>
 
-<h3>${c.nome}</h3>
+${c.nome}
+
+</h3>
 
 <p>
 
-<b>${c.tipo}</b>
+<b>
+
+${c.tipo}
+
+</b>
 
 </p>
 
 <p>
 
-<b>Temporada:</b>
+<b>
+
+Temporada:
+
+</b>
 
 ${t.ano}
 
@@ -322,7 +391,11 @@ ${t.ano}
 
 <p>
 
-<b>Time:</b>
+<b>
+
+Time:
+
+</b>
 
 ${t.time || "-"}
 
@@ -330,7 +403,11 @@ ${t.time || "-"}
 
 <p>
 
-<b>Seleção:</b>
+<b>
+
+Seleção:
+
+</b>
 
 ${t.selecao || "-"}
 
@@ -338,7 +415,11 @@ ${t.selecao || "-"}
 
 <p>
 
-<b>Jogos:</b>
+<b>
+
+Jogos:
+
+</b>
 
 ${t.jogos}
 
@@ -346,7 +427,11 @@ ${t.jogos}
 
 <p>
 
-<b>Vitórias:</b>
+<b>
+
+Vitórias:
+
+</b>
 
 ${t.vitorias}
 
@@ -354,7 +439,11 @@ ${t.vitorias}
 
 <p>
 
-<b>Empates:</b>
+<b>
+
+Empates:
+
+</b>
 
 ${t.empates}
 
@@ -362,7 +451,11 @@ ${t.empates}
 
 <p>
 
-<b>Derrotas:</b>
+<b>
+
+Derrotas:
+
+</b>
 
 ${t.derrotas}
 
@@ -370,7 +463,11 @@ ${t.derrotas}
 
 <p>
 
-<b>Gols:</b>
+<b>
+
+Gols:
+
+</b>
 
 ${t.gols}
 
@@ -378,7 +475,11 @@ ${t.gols}
 
 <p>
 
-<b>Orçamento Inicial:</b>
+<b>
+
+Orçamento Inicial:
+
+</b>
 
 ${t.orcamento || "-"}
 
@@ -386,7 +487,11 @@ ${t.orcamento || "-"}
 
 <p>
 
-<b>Orçamento Final:</b>
+<b>
+
+Orçamento Final:
+
+</b>
 
 ${t.orcamentof || "-"}
 
@@ -394,15 +499,52 @@ ${t.orcamentof || "-"}
 
 <p>
 
-<b>Maior Goleada:</b>
+<b>
 
-${t.goleada || "-"}
+Salário:
+
+</b>
+
+${t.salario || "-"}
 
 </p>
 
 <p>
 
-<b>Maior Transferência:</b>
+<b>
+
+Maior Goleada:
+
+</b>
+
+${
+
+t.goleada &&
+
+t.goleada.adversario
+
+?
+
+`${t.goleada.marcados}
+ x
+${t.goleada.sofridos}
+ ${t.goleada.adversario}`
+
+:
+
+"-"
+
+}
+
+</p>
+
+<p>
+
+<b>
+
+Maior Transferência:
+
+</b>
 
 ${t.transferencia || "-"}
 
@@ -410,26 +552,27 @@ ${t.transferencia || "-"}
 
 <p>
 
-<b>Títulos</b>
+<b>
+
+Títulos
+
+</b>
 
 </p>
 
 <ul>
 
 ${
+
 t.titulos.length
 
 ?
 
-t.titulos
-
-.map(
+t.titulos.map(
 
 x=>`<li>${x}</li>`
 
-)
-
-.join("")
+).join("")
 
 :
 
@@ -456,13 +599,21 @@ async function alterarTime(){
 
 const t = temporadaAtual();
 
-const nome = novoTime.value;
+if(!t) return;
+
+const nome =
+
+novoTime.value;
 
 t.time = nome;
 
-/* busca o escudo na TheSportsDB */
+t.escudo =
 
-t.escudo = await pegarEscudo(nome);
+await pegarEscudo(
+
+nome
+
+);
 
 salvar();
 
@@ -473,6 +624,7 @@ renderHistorico();
 renderHall();
 
 }
+
 
 function alterarSelecao(){
 
@@ -529,19 +681,72 @@ renderAtual();
 }
 
 
+function alterarSalario(){
+
+const t = temporadaAtual();
+
+if(!t) return;
+
+t.salario =
+
+document.getElementById(
+
+"novoSalario"
+
+).value;
+
+salvar();
+
+renderAtual();
+
+}
+
+
 function alterarGoleada(){
 
 const t = temporadaAtual();
 
 if(!t) return;
 
-t.goleada =
+t.goleada = {
 
-novaGoleada.value;
+marcados:Number(
+
+document.getElementById(
+
+"golsFeitos"
+
+).value
+
+),
+
+sofridos:Number(
+
+document.getElementById(
+
+"golsSofridos"
+
+).value
+
+),
+
+adversario:
+
+document.getElementById(
+
+"adversarioGoleada"
+
+).value
+
+};
 
 salvar();
 
 renderAtual();
+
+renderHistorico();
+
+renderHall();
 
 }
 
@@ -645,7 +850,6 @@ renderAtual();
 
 }
 
-
 function alterarEmpates(){
 
 const t = temporadaAtual();
@@ -725,9 +929,7 @@ const c = getAtual();
 
 if(!c) return;
 
-const ultima =
-
-temporadaAtual();
+const ultima = temporadaAtual();
 
 c.temporadas.push({
 
@@ -743,6 +945,12 @@ time:
 
 ultima.time,
 
+escudo:
+
+ultima.escudo ||
+
+"",
+
 selecao:
 
 ultima.selecao,
@@ -755,6 +963,10 @@ orcamentof:
 
 ultima.orcamentof,
 
+salario:
+
+ultima.salario,
+
 jogos:0,
 
 vitorias:0,
@@ -765,7 +977,15 @@ derrotas:0,
 
 gols:0,
 
-goleada:"",
+goleada:{
+
+marcados:0,
+
+sofridos:0,
+
+adversario:""
+
+},
 
 transferencia:"",
 
@@ -777,7 +997,12 @@ salvar();
 
 renderAtual();
 
+renderHistorico();
+
+renderHall();
+
 }
+
 
 /* ==========================
    MENU TEMPORADAS
@@ -869,6 +1094,7 @@ Time:
 ${t.time || "-"}
 
 </p>
+
 <p>
 
 Seleção:
@@ -876,6 +1102,7 @@ Seleção:
 ${t.selecao || "-"}
 
 </p>
+
 <p>
 
 Jogos:
@@ -883,6 +1110,7 @@ Jogos:
 ${t.jogos}
 
 </p>
+
 <p>
 
 Vitórias:
@@ -890,6 +1118,7 @@ Vitórias:
 ${t.vitorias}
 
 </p>
+
 <p>
 
 Empates:
@@ -897,6 +1126,7 @@ Empates:
 ${t.empates}
 
 </p>
+
 <p>
 
 Derrotas:
@@ -904,6 +1134,7 @@ Derrotas:
 ${t.derrotas}
 
 </p>
+
 <p>
 
 Gols:
@@ -911,6 +1142,7 @@ Gols:
 ${t.gols}
 
 </p>
+
 <p>
 
 Orçamento:
@@ -918,6 +1150,7 @@ Orçamento:
 ${t.orcamento || "-"}
 
 </p>
+
 <p>
 
 Orçamento Final:
@@ -925,13 +1158,43 @@ Orçamento Final:
 ${t.orcamentof || "-"}
 
 </p>
+
+<p>
+
+Salário:
+
+${t.salario || "-"}
+
+</p>
+
 <p>
 
 Maior Goleada:
 
-${t.goleada || "-"}
+${
+
+t.goleada &&
+
+t.goleada.adversario
+
+?
+
+`${t.goleada.marcados}
+
+x
+
+${t.goleada.sofridos}
+
+${t.goleada.adversario}`
+
+:
+
+"-"
+
+}
 
 </p>
+
 <p>
 
 Maior Transferência:
@@ -939,11 +1202,13 @@ Maior Transferência:
 ${t.transferencia || "-"}
 
 </p>
+
 <p>
 
 Títulos:
 
 </p>
+
 <ul>
 
 ${
@@ -973,7 +1238,6 @@ x=>`<li>${x}</li>`
 ).join("");
 
 }
-
 
 /* ==========================
    CARREGAR CARREIRAS
@@ -1025,9 +1289,7 @@ carreiras.map(
 
 <b>
 
-Carreira
-
-${i+1}
+Carreira ${i+1}
 
 -
 
@@ -1109,17 +1371,17 @@ carreiras =
 
 carreiras.filter(
 
-c => c.id !== id
+c=>c.id!==id
 
 );
 
 if(
 
-atual === id
+atual===id
 
 ){
 
-atual = null;
+atual=null;
 
 }
 
@@ -1152,7 +1414,7 @@ carreiras =
 
 carreiras.filter(
 
-c => c.id !== atual
+c=>c.id!==atual
 
 );
 
@@ -1175,16 +1437,24 @@ ir(
 
 async function renderHistorico(){
 
-const div = document.getElementById(
+const div =
+
+document.getElementById(
+
 "infoHistorico"
+
 );
 
 if(!div) return;
 
 
-if(carreiras.length===0){
+if(
 
-div.innerHTML=`
+carreiras.length===0
+
+){
+
+div.innerHTML = `
 
 <div class="card">
 
@@ -1203,50 +1473,64 @@ return;
 }
 
 
-let html="";
+let html = "";
 
 
-for(const c of carreiras){
+for(
 
-let totalTitulos=0;
+const c of carreiras
 
-let totais={};
+){
 
-let equipes={};
+let totalTitulos = 0;
+
+let totais = {};
+
+let equipes = {};
 
 
-for(const t of c.temporadas){
+for(
 
-const clube=
+const t of c.temporadas
+
+){
+
+const clube =
 
 t.time ||
 
 "Sem clube";
 
 
-if(!equipes[clube]){
+if(
 
+!equipes[clube]
 
-let escudo =
+){
 
-await pegarEscudo(
+equipes[clube] = {
 
-clube
+inicio:
 
-);
+t.ano,
 
+fim:
 
-equipes[clube]={
-
-inicio:t.ano,
-
-fim:t.ano,
+t.ano,
 
 titulos:{},
 
 escudo:
 
-escudo ||
+t.escudo ||
+
+await pegarEscudo(
+
+clube
+
+)
+
+||
 
 "escudo_padrao.png"
 
@@ -1255,12 +1539,20 @@ escudo ||
 }
 
 
-equipes[clube].fim =
+equipes[clube]
+
+.fim =
 
 t.ano;
 
 
-for(const titulo of t.titulos){
+for(
+
+const titulo
+
+of t.titulos
+
+){
 
 equipes[clube]
 
@@ -1292,9 +1584,7 @@ totalTitulos++;
 
 }
 
-
 }
-
 
 html += `
 
@@ -1308,9 +1598,15 @@ ${c.nome}
 
 `;
 
-for(const nome in equipes){
+for(
 
-const equipe = equipes[nome];
+const nome in equipes
+
+){
+
+const equipe =
+
+equipes[nome];
 
 html += `
 
@@ -1338,19 +1634,31 @@ ${nome}
 
 <p>
 
-📅 ${equipe.inicio} - ${equipe.fim}
+📅
+
+${equipe.inicio}
+
+-
+
+${equipe.fim}
 
 </p>
 
 `;
 
-const lista = Object.entries(
+const lista =
+
+Object.entries(
 
 equipe.titulos
 
 );
 
-if(lista.length===0){
+if(
+
+lista.length===0
+
+){
 
 html += `
 
@@ -1363,6 +1671,7 @@ Nenhum título conquistado
 `;
 
 }
+
 
 lista.forEach(
 
@@ -1477,9 +1786,8 @@ div.innerHTML = html;
 
 }
 
-/* ==========================
-   HALL DA FAMA
-========================== */
+
+
 
 function renderHall(){
 
@@ -1510,43 +1818,33 @@ return;
 }
 
 const titulos=[];
-
 const goleadas=[];
-
 const transferencias=[];
-
 const temporadas=[];
-
 const gols=[];
-
 const vitorias=[];
-
+const jogos=[];
+const salarios=[];
 const orcamentos=[];
-
 const orcamentosF=[];
 
 
 carreiras.forEach(c=>{
 
 let totalTitulos=0;
-
 let maiorGoleada=0;
-
 let maiorTransferencia=0;
-
 let totalGols=0;
-
 let totalVitorias=0;
-
+let totalJogos=0;
 let maiorOrcamento=0;
-
 let maiorOrcamentoF=0;
+let maiorSalario=0;
 
 
 c.temporadas.forEach(t=>{
 
 totalTitulos += t.titulos.length;
-
 
 maiorGoleada = Math.max(
 
@@ -1556,7 +1854,6 @@ Number(t.goleada)||0
 
 );
 
-
 maiorTransferencia = Math.max(
 
 maiorTransferencia,
@@ -1565,15 +1862,11 @@ Number(t.transferencia)||0
 
 );
 
+totalGols += Number(t.gols)||0;
 
-totalGols +=
+totalVitorias += Number(t.vitorias)||0;
 
-Number(t.gols)||0;
-
-
-totalVitorias +=
-
-Number(t.vitorias)||0;
+totalJogos += Number(t.jogos)||0;
 
 
 maiorOrcamento = Math.max(
@@ -1598,6 +1891,21 @@ maiorOrcamentoF,
 Number(
 
 String(t.orcamentof)
+
+.replace(/[^\d]/g,'')
+
+)||0
+
+);
+
+
+maiorSalario = Math.max(
+
+maiorSalario,
+
+Number(
+
+String(t.salario)
 
 .replace(/[^\d]/g,'')
 
@@ -1662,6 +1970,24 @@ valor:totalVitorias
 });
 
 
+jogos.push({
+
+nome:c.nome,
+
+valor:totalJogos
+
+});
+
+
+salarios.push({
+
+nome:c.nome,
+
+valor:maiorSalario
+
+});
+
+
 orcamentos.push({
 
 nome:c.nome,
@@ -1683,19 +2009,14 @@ valor:maiorOrcamentoF
 
 
 titulos.sort((a,b)=>b.valor-a.valor);
-
 goleadas.sort((a,b)=>b.valor-a.valor);
-
 transferencias.sort((a,b)=>b.valor-a.valor);
-
 temporadas.sort((a,b)=>b.valor-a.valor);
-
 gols.sort((a,b)=>b.valor-a.valor);
-
 vitorias.sort((a,b)=>b.valor-a.valor);
-
+jogos.sort((a,b)=>b.valor-a.valor);
+salarios.sort((a,b)=>b.valor-a.valor);
 orcamentos.sort((a,b)=>b.valor-a.valor);
-
 orcamentosF.sort((a,b)=>b.valor-a.valor);
 
 div.innerHTML =
@@ -1746,6 +2067,16 @@ temporadas
 
 hallCard(
 
+"🎮 Jogos",
+
+jogos
+
+)
+
++
+
+hallCard(
+
 "🥅 Total de Gols",
 
 gols
@@ -1766,7 +2097,19 @@ vitorias
 
 hallCard(
 
-"💵 Maior Orçamento Inicial",
+"💵 Salários",
+
+salarios,
+
+"dinheiro"
+
+)
+
++
+
+hallCard(
+
+"🏦 Maior Orçamento Inicial",
 
 orcamentos,
 
@@ -1788,6 +2131,183 @@ orcamentosF,
 
 }
 
+
+
+/* ==========================
+FORMATAR VALORES
+========================== */
+
+function formatarValor(
+
+valor,
+
+tipo
+
+){
+
+if(tipo==="dinheiro"){
+
+return "R$ " +
+
+Number(valor)
+
+.toLocaleString(
+
+"pt-BR"
+
+);
+
+}
+
+
+if(tipo==="placar"){
+
+return valor;
+
+}
+
+
+return valor;
+
+}
+
+
+
+/* ==========================
+CARD HALL
+========================== */
+
+function hallCard(
+
+titulo,
+
+lista,
+
+tipo="normal"
+
+){
+
+return `
+
+<div class="card">
+
+<h3>
+
+${titulo}
+
+</h3>
+
+
+<div class="hall-item">
+
+🥇
+
+${
+
+lista[0]
+
+?
+
+`${lista[0].nome}
+
+(
+
+${formatarValor(
+
+lista[0].valor,
+
+tipo
+
+)}
+
+)`
+
+:
+
+"-"
+
+}
+
+</div>
+
+
+<div class="hall-item">
+
+🥈
+
+${
+
+lista[1]
+
+?
+
+`${lista[1].nome}
+
+(
+
+${formatarValor(
+
+lista[1].valor,
+
+tipo
+
+)}
+
+)`
+
+:
+
+"-"
+
+}
+
+</div>
+
+
+<div class="hall-item">
+
+🥉
+
+${
+
+lista[2]
+
+?
+
+`${formatarValor(
+
+lista[2].nome,
+
+tipo
+
+)}
+
+(
+
+${formatarValor(
+
+lista[2].valor,
+
+tipo
+
+)}
+
+)`
+
+:
+
+"-"
+
+}
+
+</div>
+
+
+</div>
+
+`;
+
+}
 
 
 /* ==========================
