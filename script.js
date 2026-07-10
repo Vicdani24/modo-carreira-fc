@@ -212,52 +212,45 @@ tipo:tipo.value,
 
 temporadas:[{
 
-ano:Number(
+    ano:Number(temporada.value),
 
-temporada.value
+    time: time.value || "",
 
-),
+    escudo:"",
 
-time:
+    selecao:"",
 
-time.value || "",
+    orcamento: orcamento.value || "",
 
-escudo:"",
+    orcamentof:"",
 
-selecao:"",
+    salario:"",
 
-orcamento:
+    jogos:0,
 
-orcamento.value || "",
+    vitorias:0,
 
-orcamentof:"",
+    empates:0,
 
-salario:"",
+    derrotas:0,
 
-jogos:0,
+    gols:0,
 
-vitorias:0,
+    goleada:{
+        marcados:0,
+        sofridos:0,
+        adversario:""
+    },
 
-empates:0,
+    transferencia:"",
 
-derrotas:0,
+    artilheiros:[],
 
-gols:0,
+    melhorTecnico:false,
 
-goleada:{
+    melhorJogador:false,
 
-marcados:0,
-
-sofridos:0,
-
-adversario:""
-
-},
-
-transferencia:"",
-
-titulos:[]
-
+    titulos:[]
 }]
 
 };
@@ -286,6 +279,19 @@ ir(
 
 }
 
+if(maiorArtilheiro.nome){
+
+    artilheiros.push({
+
+        nome:c.nome,
+
+        jogador:maiorArtilheiro.nome,
+
+        valor:maiorArtilheiro.gols
+
+    });
+
+}
 
 /* ==========================
    AUXILIARES
@@ -327,39 +333,37 @@ const c = getAtual();
 if(!c){
 
 document.getElementById(
-
 "infoAtual"
-
 ).innerHTML =
-
 "<p>Nenhuma carreira carregada.</p>";
 
 return;
 
 }
 
+
 const t = temporadaAtual();
 
-const escudo =
-
-await pegarEscudo(
-
+const escudo = await pegarEscudo(
 t.time
-
 );
 
+
+
 document.getElementById(
-
 "infoAtual"
-
 ).innerHTML = `
 
+
 <div class="card">
+
 
 <img
 src="${escudo}"
 class="escudo"
 >
+
+
 
 <h3>
 
@@ -367,168 +371,141 @@ ${c.nome}
 
 </h3>
 
+
+
 <p>
 
-<b>
-
-${c.tipo}
-
-</b>
+<b>${c.tipo}</b>
 
 </p>
 
+
+
+<div class="painel-atual">
+
+
+<div class="coluna-atual">
+
+
 <p>
 
-<b>
-
-Temporada:
-
-</b>
+<b>Temporada:</b>
 
 ${t.ano}
 
 </p>
 
+
 <p>
 
-<b>
-
-Time:
-
-</b>
+<b>Time:</b>
 
 ${t.time || "-"}
 
 </p>
 
+
 <p>
 
-<b>
-
-Seleção:
-
-</b>
+<b>Seleção:</b>
 
 ${t.selecao || "-"}
 
 </p>
 
+
 <p>
 
-<b>
-
-Jogos:
-
-</b>
+<b>Jogos:</b>
 
 ${t.jogos}
 
 </p>
 
+
 <p>
 
-<b>
-
-Vitórias:
-
-</b>
+<b>Vitórias:</b>
 
 ${t.vitorias}
 
 </p>
 
+
 <p>
 
-<b>
-
-Empates:
-
-</b>
+<b>Empates:</b>
 
 ${t.empates}
 
 </p>
 
+
 <p>
 
-<b>
-
-Derrotas:
-
-</b>
+<b>Derrotas:</b>
 
 ${t.derrotas}
 
 </p>
 
+
 <p>
 
-<b>
-
-Gols:
-
-</b>
+<b>Gols:</b>
 
 ${t.gols}
 
 </p>
 
+
+</div>
+
+
+
+<div class="coluna-atual">
+
+
 <p>
 
-<b>
-
-Orçamento Inicial:
-
-</b>
+<b>Orçamento Inicial:</b>
 
 ${t.orcamento || "-"}
 
 </p>
 
+
 <p>
 
-<b>
-
-Orçamento Final:
-
-</b>
+<b>Orçamento Final:</b>
 
 ${t.orcamentof || "-"}
 
 </p>
 
+
 <p>
 
-<b>
-
-Salário:
-
-</b>
+<b>Salário:</b>
 
 ${t.salario || "-"}
 
 </p>
 
+
+
 <p>
 
-<b>
-
-Maior Goleada:
-
-</b>
+<b>Maior Goleada:</b>
 
 ${
 
-t.goleada &&
-
-t.goleada.adversario
-
-?
+t.goleada ?
 
 `${t.goleada.marcados}
  x
 ${t.goleada.sofridos}
- ${t.goleada.adversario}`
+${t.goleada.adversario ? " " + t.goleada.adversario : ""}`
 
 :
 
@@ -538,33 +515,30 @@ ${t.goleada.sofridos}
 
 </p>
 
+
+
 <p>
 
-<b>
-
-Maior Transferência:
-
-</b>
+<b>Maior Transferência:</b>
 
 ${t.transferencia || "-"}
 
 </p>
 
+
+
 <p>
 
-<b>
-
-Títulos
-
-</b>
+<b>Títulos:</b>
 
 </p>
+
 
 <ul>
 
 ${
 
-t.titulos.length
+t.titulos && t.titulos.length
 
 ?
 
@@ -582,14 +556,21 @@ x=>`<li>${x}</li>`
 
 </ul>
 
+
 </div>
+
+
+</div>
+
+
+</div>
+
 
 `;
 
 renderTemporadas();
 
 }
-
 
 /* ==========================
    ALTERAÇÕES
@@ -704,52 +685,43 @@ renderAtual();
 
 function alterarGoleada(){
 
-const t = temporadaAtual();
+    const t = temporadaAtual();
 
-if(!t) return;
+    if(!t) return;
 
-t.goleada = {
+    const marcados = Number(
+        document.getElementById("golsFeitos").value
+    );
 
-marcados:Number(
+    const sofridos = Number(
+        document.getElementById("golsSofridos").value
+    );
 
-document.getElementById(
+    const adversario = document.getElementById(
+        "adversarioGoleada"
+    ).value;
 
-"golsFeitos"
+    if(
+        !t.goleada ||
+        marcados > t.goleada.marcados ||
+        (
+            marcados === t.goleada.marcados &&
+            sofridos < t.goleada.sofridos
+        )
+    ){
+        t.goleada = {
+            marcados,
+            sofridos,
+            adversario
+        };
+    }
 
-).value
+    salvar();
 
-),
-
-sofridos:Number(
-
-document.getElementById(
-
-"golsSofridos"
-
-).value
-
-),
-
-adversario:
-
-document.getElementById(
-
-"adversarioGoleada"
-
-).value
-
-};
-
-salvar();
-
-renderAtual();
-
-renderHistorico();
-
-renderHall();
-
+    renderAtual();
+    renderHistorico();
+    renderHall();
 }
-
 
 function alterarTransferencia(){
 
@@ -767,6 +739,150 @@ renderAtual();
 
 }
 
+/* ==========================
+   ARTILHEIROS
+========================== */
+
+function adicionarArtilheiro(){
+
+    const t = temporadaAtual();
+
+    if(!t) return;
+
+    const nome = document.getElementById("nomeArtilheiro").value.trim();
+
+    const gols = Number(
+        document.getElementById("golsArtilheiro").value
+    );
+
+    if(!nome){
+        alert("Digite o nome do jogador.");
+        return;
+    }
+
+    if(gols < 0){
+        alert("Informe a quantidade de gols.");
+        return;
+    }
+
+    if(!t.artilheiros){
+        t.artilheiros = [];
+    }
+
+    const existente = t.artilheiros.find(
+        a => a.nome.toLowerCase() === nome.toLowerCase()
+    );
+
+    if(existente){
+
+        existente.gols = gols;
+
+    }else{
+
+        t.artilheiros.push({
+            nome,
+            gols
+        });
+
+    }
+
+    salvar();
+
+    renderArtilheiros();
+
+    renderAtual();
+
+    renderHall();
+
+}
+
+ /* ==========================
+    MOSTRAR ARTILHEIROS
+ ========================== */
+
+function renderArtilheiros(){
+
+    const div = document.getElementById(
+        "listaArtilheiros"
+    );
+
+    if(!div) return;
+
+    const t = temporadaAtual();
+
+    if(!t || !t.artilheiros){
+
+        div.innerHTML = "<p>Nenhum artilheiro cadastrado.</p>";
+
+        return;
+
+    }
+
+
+    if(t.artilheiros.length === 0){
+
+        div.innerHTML = "<p>Nenhum artilheiro cadastrado.</p>";
+
+        return;
+
+    }
+
+
+    t.artilheiros.sort(
+        (a,b)=>b.gols-a.gols
+    );
+
+
+    div.innerHTML = t.artilheiros.map(
+        (a,index)=>`
+
+        <div class="card">
+
+            <b>
+            ${index+1}º ${a.nome}
+            </b>
+
+            <p>
+            ⚽ ${a.gols} gols
+            </p>
+
+            <button onclick="removerArtilheiro(${index})">
+                🗑️ Remover
+            </button>
+
+        </div>
+
+        `
+    ).join("");
+
+}
+
+/* ==========================
+   REMOVER ARTILHEIRO
+========================== */
+
+function removerArtilheiro(index){
+
+    const t = temporadaAtual();
+
+    if(!t || !t.artilheiros) return;
+
+
+    t.artilheiros.splice(
+        index,
+        1
+    );
+
+
+    salvar();
+
+    renderArtilheiros();
+
+    renderAtual();
+
+    renderHall();
+
+}
 
 /* ==========================
    TITULOS
@@ -1789,6 +1905,14 @@ div.innerHTML = html;
 
 
 
+/* ==========================
+   HALL DA FAMA
+========================== */
+
+
+
+
+
 function renderHall(){
 
 const div = document.getElementById(
@@ -1797,6 +1921,7 @@ const div = document.getElementById(
 
 if(!div) return;
 
+
 if(carreiras.length===0){
 
 div.innerHTML=`
@@ -1804,9 +1929,7 @@ div.innerHTML=`
 <div class="card">
 
 <h3>
-
 Nenhuma carreira criada
-
 </h3>
 
 </div>
@@ -1816,6 +1939,7 @@ Nenhuma carreira criada
 return;
 
 }
+
 
 const titulos=[];
 const goleadas=[];
@@ -1828,33 +1952,115 @@ const salarios=[];
 const orcamentos=[];
 const orcamentosF=[];
 
-
+const artilheiros=[];
+const jogadoresAno=[];
+const tecnicosAno=[];
 carreiras.forEach(c=>{
 
 let totalTitulos=0;
+
 let maiorGoleada=0;
+
+let placarGoleada="";
+
 let maiorTransferencia=0;
+
 let totalGols=0;
+
 let totalVitorias=0;
+
 let totalJogos=0;
+
 let maiorOrcamento=0;
+
 let maiorOrcamentoF=0;
+
 let maiorSalario=0;
+
+
+let artilheiro={
+    nome:"",
+    gols:0
+};
+
+let totalJogadorAno=0;
+
+let totalTecnicoAno=0;
+
 
 
 c.temporadas.forEach(t=>{
 
-totalTitulos += t.titulos.length;
 
-maiorGoleada = Math.max(
+totalTitulos += (t.titulos || []).length;
 
-maiorGoleada,
 
-Number(t.goleada)||0
 
-);
+/* MAIOR GOLEADA */
 
-maiorTransferencia = Math.max(
+if(
+t.goleada &&
+typeof t.goleada==="object"
+){
+
+if(
+Number(t.goleada.marcados) > maiorGoleada
+){
+
+maiorGoleada =
+Number(t.goleada.marcados);
+
+
+placarGoleada =
+`${t.goleada.marcados} x ${t.goleada.sofridos} ${t.goleada.adversario || ""}`;
+
+}
+
+}
+
+
+
+/* ARTILHEIROS */
+
+if(t.artilheiros){
+
+t.artilheiros.forEach(a=>{
+
+if(
+Number(a.gols) > artilheiro.gols
+){
+
+artilheiro={
+nome:a.nome,
+gols:Number(a.gols)
+};
+
+}
+
+});
+
+}
+
+
+
+/* PREMIAÇÕES */
+
+if(t.melhorJogador){
+
+totalJogadorAno++;
+
+}
+
+
+if(t.melhorTecnico){
+
+totalTecnicoAno++;
+
+}
+
+
+
+maiorTransferencia=Math.max(
 
 maiorTransferencia,
 
@@ -1862,12 +2068,15 @@ Number(t.transferencia)||0
 
 );
 
+
+
 totalGols += Number(t.gols)||0;
+
 
 totalVitorias += Number(t.vitorias)||0;
 
-totalJogos += Number(t.jogos)||0;
 
+totalJogos += Number(t.jogos)||0;
 
 maiorOrcamento = Math.max(
 
@@ -1875,13 +2084,14 @@ maiorOrcamento,
 
 Number(
 
-String(t.orcamento)
+String(t.orcamento || "")
 
 .replace(/[^\d]/g,'')
 
 )||0
 
 );
+
 
 
 maiorOrcamentoF = Math.max(
@@ -1890,13 +2100,14 @@ maiorOrcamentoF,
 
 Number(
 
-String(t.orcamentof)
+String(t.orcamentof || "")
 
 .replace(/[^\d]/g,'')
 
 )||0
 
 );
+
 
 
 maiorSalario = Math.max(
@@ -1905,7 +2116,7 @@ maiorSalario,
 
 Number(
 
-String(t.salario)
+String(t.salario || "")
 
 .replace(/[^\d]/g,'')
 
@@ -1913,7 +2124,10 @@ String(t.salario)
 
 );
 
+
+
 });
+
 
 
 titulos.push({
@@ -1925,13 +2139,17 @@ valor:totalTitulos
 });
 
 
+
 goleadas.push({
 
 nome:c.nome,
 
-valor:maiorGoleada
+valor:maiorGoleada,
+
+placar:placarGoleada
 
 });
+
 
 
 transferencias.push({
@@ -1943,6 +2161,7 @@ valor:maiorTransferencia
 });
 
 
+
 temporadas.push({
 
 nome:c.nome,
@@ -1950,6 +2169,7 @@ nome:c.nome,
 valor:c.temporadas.length
 
 });
+
 
 
 gols.push({
@@ -1961,6 +2181,7 @@ valor:totalGols
 });
 
 
+
 vitorias.push({
 
 nome:c.nome,
@@ -1968,6 +2189,7 @@ nome:c.nome,
 valor:totalVitorias
 
 });
+
 
 
 jogos.push({
@@ -1979,6 +2201,7 @@ valor:totalJogos
 });
 
 
+
 salarios.push({
 
 nome:c.nome,
@@ -1986,6 +2209,7 @@ nome:c.nome,
 valor:maiorSalario
 
 });
+
 
 
 orcamentos.push({
@@ -1997,6 +2221,7 @@ valor:maiorOrcamento
 });
 
 
+
 orcamentosF.push({
 
 nome:c.nome,
@@ -2005,470 +2230,209 @@ valor:maiorOrcamentoF
 
 });
 
+
+
+if(artilheiro.nome){
+
+artilheiros.push({
+
+nome:c.nome,
+
+jogador:artilheiro.nome,
+
+valor:artilheiro.gols
+
+});
+
+}
+
+
+
+jogadoresAno.push({
+
+nome:c.nome,
+
+valor:totalJogadorAno
+
 });
 
 
+
+tecnicosAno.push({
+
+nome:c.nome,
+
+valor:totalTecnicoAno
+
+});
+
+
+});
+
 titulos.sort((a,b)=>b.valor-a.valor);
+
 goleadas.sort((a,b)=>b.valor-a.valor);
+
 transferencias.sort((a,b)=>b.valor-a.valor);
+
 temporadas.sort((a,b)=>b.valor-a.valor);
+
 gols.sort((a,b)=>b.valor-a.valor);
+
 vitorias.sort((a,b)=>b.valor-a.valor);
+
 jogos.sort((a,b)=>b.valor-a.valor);
+
 salarios.sort((a,b)=>b.valor-a.valor);
+
 orcamentos.sort((a,b)=>b.valor-a.valor);
+
 orcamentosF.sort((a,b)=>b.valor-a.valor);
+
+artilheiros.sort((a,b)=>b.valor-a.valor);
+
+jogadoresAno.sort((a,b)=>b.valor-a.valor);
+
+tecnicosAno.sort((a,b)=>b.valor-a.valor);
+
+
 
 div.innerHTML =
 
-hallCard(
 
-"🏆 Títulos Totais",
-
-titulos
-
-)
+hallCard("🏆 Títulos Totais",titulos)
 
 +
 
-hallCard(
-
-"⚽ Maiores Goleadas",
-
-goleadas,
-
-"placar"
-
-)
+hallCard("⚽ Maiores Goleadas",goleadas,"placar")
 
 +
 
-hallCard(
-
-"💰 Transferências",
-
-transferencias,
-
-"dinheiro"
-
-)
+hallCard("👑 Maiores Artilheiros",artilheiros,"artilheiro")
 
 +
 
-hallCard(
-
-"📅 Temporadas",
-
-temporadas
-
-)
+hallCard("⭐ Jogador do Ano",jogadoresAno)
 
 +
 
-hallCard(
-
-"🎮 Jogos",
-
-jogos
-
-)
+hallCard("🏆 Técnico do Ano",tecnicosAno)
 
 +
 
-hallCard(
-
-"🥅 Total de Gols",
-
-gols
-
-)
+hallCard("💰 Transferências",transferencias,"dinheiro")
 
 +
 
-hallCard(
-
-"✅ Total de Vitórias",
-
-vitorias
-
-)
+hallCard("📅 Temporadas",temporadas)
 
 +
 
-hallCard(
-
-"💵 Salários",
-
-salarios,
-
-"dinheiro"
-
-)
+hallCard("🎮 Jogos",jogos)
 
 +
 
-hallCard(
-
-"🏦 Maior Orçamento Inicial",
-
-orcamentos,
-
-"dinheiro"
-
-)
+hallCard("🥅 Total de Gols",gols)
 
 +
 
-hallCard(
+hallCard("✅ Total de Vitórias",vitorias)
 
-"🏦 Maior Orçamento Final",
++
 
-orcamentosF,
+hallCard("💵 Salários",salarios,"dinheiro")
 
-"dinheiro"
++
 
-);
+hallCard("🏦 Maior Orçamento Inicial",orcamentos,"dinheiro")
+
++
+
+hallCard("🏦 Maior Orçamento Final",orcamentosF,"dinheiro");
+
 
 }
 
 
 
 /* ==========================
-FORMATAR VALORES
+ FORMATAR VALORES
 ========================== */
 
-function formatarValor(
+function formatarValor(valor,tipo){
 
-valor,
-
-tipo
-
-){
 
 if(tipo==="dinheiro"){
 
-return "R$ " +
-
-Number(valor)
-
-.toLocaleString(
-
-"pt-BR"
-
-);
+return "R$ " + Number(valor)
+.toLocaleString("pt-BR");
 
 }
+
+
+return valor;
+
+}
+
+
+
+/* ==========================
+ CARD HALL
+========================== */
+
+function hallCard(titulo,lista,tipo="normal"){
+
+
+function mostrar(item){
+
+
+if(!item) return "-";
 
 
 if(tipo==="placar"){
 
-return valor;
+return `${item.nome} (${item.placar})`;
 
 }
 
 
-return valor;
+if(tipo==="artilheiro"){
+
+return `${item.nome}<br>👑 ${item.jogador} - ${item.valor} gols`;
 
 }
 
 
+return `${item.nome} (${formatarValor(item.valor,tipo)})`;
 
-/* ==========================
-CARD HALL
-========================== */
+}
 
-function hallCard(
 
-titulo,
-
-lista,
-
-tipo="normal"
-
-){
 
 return `
 
 <div class="card">
 
-<h3>
-
-${titulo}
-
-</h3>
+<h3>${titulo}</h3>
 
 
 <div class="hall-item">
 
-🥇
-
-${
-
-lista[0]
-
-?
-
-`${lista[0].nome}
-
-(
-
-${formatarValor(
-
-lista[0].valor,
-
-tipo
-
-)}
-
-)`
-
-:
-
-"-"
-
-}
+🥇 ${mostrar(lista[0])}
 
 </div>
 
 
 <div class="hall-item">
 
-🥈
-
-${
-
-lista[1]
-
-?
-
-`${lista[1].nome}
-
-(
-
-${formatarValor(
-
-lista[1].valor,
-
-tipo
-
-)}
-
-)`
-
-:
-
-"-"
-
-}
+🥈 ${mostrar(lista[1])}
 
 </div>
 
 
 <div class="hall-item">
 
-🥉
-
-${
-
-lista[2]
-
-?
-
-`${formatarValor(
-
-lista[2].nome,
-
-tipo
-
-)}
-
-(
-
-${formatarValor(
-
-lista[2].valor,
-
-tipo
-
-)}
-
-)`
-
-:
-
-"-"
-
-}
-
-</div>
-
-
-</div>
-
-`;
-
-}
-
-
-/* ==========================
-   FORMATAR VALORES
-========================== */
-
-function formatarValor(
-
-valor,
-
-tipo
-
-){
-
-if(tipo==="dinheiro"){
-
-return "€ " +
-
-Number(valor)
-
-.toLocaleString(
-
-"pt-BR"
-
-);
-
-}
-
-if(tipo==="placar"){
-
-return valor +
-
-" x 0";
-
-}
-
-return valor;
-
-}
-
-
-/* ==========================
-   CARD HALL
-========================== */
-
-function hallCard(
-
-titulo,
-
-lista,
-
-tipo="normal"
-
-){
-
-return `
-
-<div class="card">
-
-<h3>
-
-${titulo}
-
-</h3>
-
-
-<div class="hall-item">
-
-🥇
-
-${
-
-lista[0]
-
-?
-
-`${lista[0].nome}
-
-(
-
-${formatarValor(
-
-lista[0].valor,
-
-tipo
-
-)}
-
-)`
-
-:
-
-"-"
-
-}
-
-</div>
-
-
-<div class="hall-item">
-
-🥈
-
-${
-
-lista[1]
-
-?
-
-`${lista[1].nome}
-
-(
-
-${formatarValor(
-
-lista[1].valor,
-
-tipo
-
-)}
-
-)`
-
-:
-
-"-"
-
-}
-
-</div>
-
-
-<div class="hall-item">
-
-🥉
-
-${
-
-lista[2]
-
-?
-
-`${lista[2].nome}
-
-(
-
-${formatarValor(
-
-lista[2].valor,
-
-tipo
-
-)}
-
-)`
-
-:
-
-"-"
-
-}
+🥉 ${mostrar(lista[2])}
 
 </div>
 
