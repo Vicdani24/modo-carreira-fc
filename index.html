@@ -69,12 +69,9 @@ content="width=device-width,initial-scale=1.0">
 <input id="orcamento"
 placeholder="Orçamento Inicial">
 
-<input id="orcamentof"
-placeholder="Orçamento Final">
-
 <input id="temporada"
 placeholder="Temporada inicial">
-
+<br>
 <button onclick="criar()">
 
 Criar
@@ -155,127 +152,111 @@ onclick="toggleTemporada()">
 id="conteudoTemporada"
 class="menu-temporada-conteudo">
 
-<div class="dados-colunas">
+<div class="container">
 
-<div class="dados-bloco">
-
-<input id="novoTime"
+<input
+id="novoTime"
 placeholder="Novo Time">
 
 <button onclick="alterarTime()">
-
 Alterar Time
-
 </button>
 
 
-<input id="novaSelecao"
+<input
+id="novaSelecao"
 placeholder="Seleção">
 
 <button onclick="alterarSelecao()">
-
 Alterar Seleção
-
 </button>
 
-<input id="novoJogos"
+
+<input
+id="novoJogos"
 placeholder="Jogos">
 
 <button onclick="alterarJogos()">
-
 Atualizar Jogos
-
 </button>
 
 
-<input id="novoVitorias"
+<input
+id="novoVitorias"
 placeholder="Vitórias">
 
 <button onclick="alterarVitorias()">
-
 Atualizar Vitórias
-
 </button>
 
 
-<input id="novoEmpates"
+<input
+id="novoEmpates"
 placeholder="Empates">
 
 <button onclick="alterarEmpates()">
-
 Atualizar Empates
-
 </button>
 
 
-<input id="novoDerrotas"
+<input
+id="novoDerrotas"
 placeholder="Derrotas">
 
 <button onclick="alterarDerrotas()">
-
 Atualizar Derrotas
-
 </button>
 
 
-<input id="novoGols"
+<input
+id="novoGols"
 placeholder="Gols Marcados">
 
 <button onclick="alterarGols()">
-
 Atualizar Gols
-
 </button>
 
-<input id="novoOrcamento"
+</div>
+
+<!-- COLUNA DIREITA -->
+
+<div class="dados-bloco direita">
+
+<input
+id="novoOrcamento"
 placeholder="Orçamento Inicial">
 
 <button onclick="alterarOrcamento()">
-
 Atualizar
-
 </button>
-</div>
 
 
-<div class="dados-bloco">
-
-<input id="novaOrcamentof"
+<input
+id="novaOrcamentof"
 placeholder="Orçamento Final">
 
 <button onclick="alterarOrcamentof()">
-
 Atualizar
-
 </button>
+
 
 <input
-
 id="novoSalario"
+placeholder="Salário">
 
-placeholder="Salário"
-
->
-
-<button
-
-onclick="alterarSalario()"
-
->
-
+<button onclick="alterarSalario()">
 Salvar Salário
-
 </button>
 
 
-<input id="novaTransferencia"
+<input
+id="novaTransferencia"
 placeholder="Maior Transferência">
 
 <button onclick="alterarTransferencia()">
-
 Atualizar Transferência
-
 </button>
+
 
 <hr>
 
@@ -285,26 +266,23 @@ Atualizar Transferência
 
 <input
 id="golsFeitos"
-placeholder="Gols Marcados"
->
+placeholder="Gols Marcados">
 
 <input
 id="golsSofridos"
-placeholder="Gols Sofridos"
->
+placeholder="Gols Sofridos">
 
 <input
 id="adversarioGoleada"
-placeholder="Adversário"
->
+placeholder="Adversário">
 
 <button
-onclick="alterarGoleada()"
->
+onclick="alterarGoleada()">
 
 Salvar Goleada
 
 </button>
+
 
 <hr>
 
@@ -314,30 +292,27 @@ Salvar Goleada
 
 <input
 id="nomeArtilheiro"
-placeholder="Nome do jogador"
->
+placeholder="Nome do jogador">
 
 <input
 id="golsArtilheiro"
 type="number"
-placeholder="Gols"
->
+placeholder="Gols">
 
 <button
-onclick="adicionarArtilheiro()"
->
+onclick="adicionarArtilheiro()">
 
 ➕ Adicionar Artilheiro
 
 </button>
 
 <div
-id="listaArtilheiros"
->
+id="listaArtilheiros">
 
 </div>
+
 </div>
-</div>
+
 
 <hr>
 
@@ -350,8 +325,7 @@ id="listaArtilheiros"
 <input
 type="checkbox"
 id="melhorTecnico"
-onchange="alterarMelhorTecnico()"
->
+onchange="alterarMelhorTecnico()">
 
 🏆 Técnico do Ano
 
@@ -364,13 +338,11 @@ onchange="alterarMelhorTecnico()"
 <input
 type="checkbox"
 id="melhorJogador"
-onchange="alterarMelhorJogador()"
->
+onchange="alterarMelhorJogador()">
 
 ⭐ Jogador do Ano
 
 </label>
-
 
 <hr>
 
@@ -453,8 +425,6 @@ onchange="alterarMelhorJogador()"
 
 </h2>
 
-<div id="infoHistorico"></div>
-
 <button
 class="botao-voltar"
 onclick="ir('menu')">
@@ -462,6 +432,8 @@ onclick="ir('menu')">
 ⬅ Voltar ao Menu
 
 </button>
+
+<div id="infoHistorico"></div>
 
 </div>
 
@@ -476,13 +448,16 @@ onclick="ir('menu')">
 
 </h2>
 
-<div id="infoHall"></div>
-
 <button onclick="ir('menu')">
 
 ⬅ Voltar ao Menu
 
 </button>
+
+<br>
+
+<div id="infoHall"></div>
+
 
 </div>
 
